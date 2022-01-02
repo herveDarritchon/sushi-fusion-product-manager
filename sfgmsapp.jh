@@ -1,0 +1,51 @@
+
+entity Client {
+	nom String required,
+    adresse String,
+    type ClientEnum,
+    vendeur Utilisateur
+}
+
+relationship OneToOne {
+	Client{vendeur} to Utilisateur
+}
+
+entity Produit {
+	reference String,
+	nom String required,
+    prix Integer
+}
+
+
+relationship OneToMany {
+	Element to Produit{ingredient(nombre)}
+}
+
+entity Element {
+	nom String required,
+}
+
+entity Utilisateur {
+	nom String required,
+    role RoleEnum required,
+}
+
+enum RoleEnum {
+    VENDEUR, ADMIN, ASSISTANTE
+}
+
+enum ClientEnum {
+    GMS, ATELIER, DETAILLANT
+}
+
+// Set pagination options
+paginate Element with infinite-scroll
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
